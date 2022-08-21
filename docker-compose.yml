@@ -11,8 +11,11 @@ services:
       SERVER_NAME: ':80'
       MERCURE_PUBLISHER_JWT_KEY: ${MERCURE_PUBLISHER_JWT_KEY}
       MERCURE_SUBSCRIBER_JWT_KEY: ${MERCURE_SUBSCRIBER_JWT_KEY}
+      DEBUG: 1
       MERCURE_EXTRA_DIRECTIVES: |
         cors_origins http://127.0.0.1:8000
+        ui: true
+        subscriptions: true
     command: /usr/bin/caddy run -config /etc/caddy/Caddyfile.dev
     volumes:
       - mercure_data:/data

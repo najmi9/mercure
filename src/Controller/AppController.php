@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Mercure\SubscriptionTokenProvider;
@@ -29,11 +31,14 @@ class AppController extends AbstractController
     public function pushUpdate(MessageBusInterface $messageBus): JsonResponse
     {
         $dataSample = ['id' => 2, 'name' => 'Imad'];
-        $topicSample = '/foo';
+
+        $targets = [
+            '/users/1',
+        ];
 
         $messageBus->dispatch(
             new Update(
-                [$topicSample],
+                $targets,
                 json_encode($dataSample),
                 true
             )

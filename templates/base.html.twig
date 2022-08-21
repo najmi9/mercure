@@ -8,10 +8,6 @@
         {% endblock %}
     </head>
     <body data-token="{{ subscription_token }}" data-url="{{ mercure() }}">
-        <div>
-            <button class="js-push-update">Push</button>
-        </div>
-
         {% block body %}{% endblock %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}

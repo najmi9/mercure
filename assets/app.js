@@ -1,34 +1,10 @@
-
-import { EventSourcePolyfill } from 'event-source-polyfill';
+import mercure from "./js/mercure";
 
 (() => {
     pushUpdate();
 
-    const url = new URL(document.body.dataset.url);
+    mercure();
 
-    url.searchParams.append('topic', '/foo');
-
-    const subscriptionToken = document.body.dataset.token;
-
-    const headers =  {
-        headers: {
-            Authorization: 'Bearer ' + subscriptionToken,
-        },
-        lastEventIdQueryParameterName: 'Last-Event-Id',
-    };
-
-    const eventSource = new EventSourcePolyfill(url, headers);
-
-    eventSource.onmessage = (e) => {
-        const data = JSON.parse(e.data);
-        console.log(data);
-    };
-
-    window.addEventListener('beforeunload', () => {
-        if (eventSource != null) {
-            eventSource.close();
-        }
-    });
 
     function pushUpdate() {
         const btn = document.querySelector('button.js-push-update');

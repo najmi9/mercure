@@ -30,10 +30,20 @@ final class SubscriptionTokenProvider implements TokenProviderInterface
 
         return $configuration->builder()
             ->issuedAt(new DateTimeImmutable())
-            ->expiresAt(new DateTimeImmutable('+ 3 days'))
-            ->withClaim('mercure', ['subscribe' => ['/foo']])
+            ->expiresAt(new DateTimeImmutable('+ 1 day'))
+            ->withClaim(
+                'mercure',
+                ['subscribe' => $this->getTargets()]
+            )
             ->getToken($configuration->signer(), $configuration->signingKey())
             ->toString()
         ;
+    }
+
+    private function getTargets(): array
+    {
+        return [
+            '/users/1',
+        ];
     }
 }

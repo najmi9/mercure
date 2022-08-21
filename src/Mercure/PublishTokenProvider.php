@@ -29,11 +29,21 @@ final class PublishTokenProvider implements TokenProviderInterface
         );
 
         return $configuration->builder()
-            ->withClaim('mercure', ['publish' => ['/foo']])
+            ->withClaim(
+                'mercure',
+                ['publish' => $this->getTargets()]
+            )
             ->issuedAt(new DateTimeImmutable())
             ->expiresAt(new DateTimeImmutable('+ 3 days'))
             ->getToken($configuration->signer(), $configuration->signingKey())
             ->toString()
         ;
+    }
+
+    private function getTargets(): array
+    {
+        return [
+            '/users/{id}',
+        ];
     }
 }
